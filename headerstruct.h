@@ -1,38 +1,34 @@
 #pragma once
 
-#define ULONG uint32_t
-#define ULONGLONG uint64_t
-#define UCHAR unsigned char
-
 #pragma pack (1)
-typedef struct _tDLPVDiskHeader_Main
+typedef struct _Header_Main
 {
-	ULONG			ulSig;
-	ULONG			ulVersion;
+	uint32_t			ulSig;
+	uint32_t			ulVersion;
 
-	ULONGLONG		ullContainerDiskSize;
-	ULONGLONG		ullSecCtxOffset;
-	ULONGLONG		ullUserCtxOffset;
+	uint64_t			ullContainerDiskSize;
+	uint64_t			ullSecCtxOffset;
+	uint64_t			ullUserCtxOffset;
 
-	ULONG			ulFlags;
-	ULONG			ulFlagsEx;
+	uint32_t			ulFlags;
+	uint32_t			ulFlagsEx;
 
-	ULONG			ulReservedBlocks;
+	uint32_t			ulReservedBlocks;
 
-	ULONG			_pad1;
-	ULONG			ulStatusFlags;
+	uint32_t			_pad1;
+	uint32_t			ulStatusFlags;
 
-	UCHAR			bReservedForJames;		// flags to set if created with trial or expired licence
+unsigned char			bReserved;		
 
-	ULONGLONG		ullLastMountTime;		// Last time the vd was mounted
+	uint64_t			ullLastMountTime;		
 
-	ULONGLONG		ulDiskStartOffset;		// Actual offset to disk data
+	uint64_t			ulDiskStartOffset;		// Actual offset to disk data
 
-	ULONG			ulNumParts;
-	ULONG			ulPartsSize;
-	UCHAR			bTieUserIV[32];			// only used if a users are tied to the drive
+	uint32_t			ulNumParts;
+	uint32_t			ulPartsSize;
+unsigned char			bTieUserIV[32];			
 
-	UCHAR			_pad2[403];				// pad to 512 byte boundary
+	unsigned char	_pad2[403];				// pad to 512 byte boundary
 
-}DLPVDISK_HEADER_MAIN, * PDLPVDISK_HEADER_MAIN;
+}HEADER_MAIN, * PHEADER_MAIN;
 #pragma pack (4)

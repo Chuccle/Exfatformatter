@@ -497,10 +497,6 @@
 };
 
 
-
-
-
-
 class ExFatFormatter {
 public:
 	/**
@@ -512,7 +508,7 @@ public:
 	 *
 	 * \return true for success or false for failure.
 	 */
-	bool format(FILE* dev, PDLPVDISK_HEADER_MAIN secBuf);
+	bool format(FILE* dev, PHEADER_MAIN pHeader);
 private:
 	bool writeSector(uint32_t sector);
 	bool syncUpcase();

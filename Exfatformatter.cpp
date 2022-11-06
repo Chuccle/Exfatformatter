@@ -76,11 +76,11 @@ bool ExFatFormatter::writeUpcase(uint32_t sector) {
 
 int main() {
 
-    DLPVDISK_HEADER_MAIN header;
+    HEADER_MAIN header;
 
     char stringBuffer[100];
 
-    strcpy_s(stringBuffer, _countof(stringBuffer), R"(C:\Users\charlie.cohen\Desktop\10 sparse1 test.dlpvdisk)");
+    strcpy_s(stringBuffer, _countof(stringBuffer), R"(\\EXAMPLE\\PATH\\TO\\VOLUME)");
 
     FILE* f;
     errno_t error;
@@ -89,7 +89,7 @@ int main() {
     if (!(error = fopen_s(&f, stringBuffer, "rb+")))
     {
         
-        fread(&header, sizeof(DLPVDISK_HEADER_MAIN), 1, f);
+        fread(&header, sizeof(HEADER_MAIN), 1, f);
 
         ExFatFormatter formatObj;
 
