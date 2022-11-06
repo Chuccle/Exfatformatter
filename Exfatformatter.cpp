@@ -126,7 +126,7 @@ int FastLog2(int input) {
 }
 
 
-bool ExFatFormatter::format(FILE* dev, PDLPVDISK_HEADER_MAIN pheader) {
+bool ExFatFormatter::format(FILE* dev, PHEADER_MAIN pHeader) {
 
     ExFatPbs_t* pbs;
     DirUpcase_t* dup;
@@ -152,11 +152,11 @@ bool ExFatFormatter::format(FILE* dev, PDLPVDISK_HEADER_MAIN pheader) {
 
     m_dev = dev;
     
-    m_headerOffset = (uint32_t)pheader->ulDiskStartOffset;
+    m_headerOffset = (uint32_t)pHeader->ulDiskStartOffset;
 
     m_bytesPerSectorShift = FastLog2(BYTES_PER_SECTOR);
     
-    sectorCount = pheader->ullContainerDiskSize >> m_bytesPerSectorShift;
+    sectorCount = pHeader->ullContainerDiskSize >> m_bytesPerSectorShift;
  
     if (sectorCount < 0X4000) {
         goto fail;
