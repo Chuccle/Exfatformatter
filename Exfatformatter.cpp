@@ -133,14 +133,14 @@ bool ExFatFormatter::format(FILE* dev, PHEADER_MAIN pHeader) {
     DirBitmap_t* dbm;
     DirLabel_t* label;
     uint64_t bitmapSize;
-    uint32_t checksum = 0;
+    uint64_t checksum = 0;
     uint64_t clusterCount;
-    uint32_t clusterHeapOffset;
+    uint64_t clusterHeapOffset;
     uint64_t fatLength;
-    uint32_t fatOffset;
+    uint64_t fatOffset;
     uint64_t ns;
-    uint32_t partitionOffset;
-    uint32_t sector;
+    uint64_t partitionOffset;
+    uint64_t sector;
     uint32_t sectorsPerCluster = 0;
     uint64_t sectorCount;
     uint8_t sectorsPerClusterShift;
@@ -152,7 +152,7 @@ bool ExFatFormatter::format(FILE* dev, PHEADER_MAIN pHeader) {
 
     m_dev = dev;
     
-    m_headerOffset = (uint32_t)pHeader->ulDiskStartOffset;
+    m_headerOffset = pHeader->ulDiskStartOffset;
 
     m_bytesPerSectorShift = FastLog2(BYTES_PER_SECTOR);
     
@@ -310,12 +310,13 @@ bool ExFatFormatter::format(FILE* dev, PHEADER_MAIN pHeader) {
             }
             if (nbit == 0 && j < 3) nbit = clen[j++];	/* Get next chain length */
         } while (nbit != 0 && i < BYTES_PER_SECTOR);
+        
         n = (ns > BYTES_PER_SECTOR) ? BYTES_PER_SECTOR : ns;	/* Write the buffered data */
 
-        for (uint32_t k = 0; k < n; k++) {
          if (!writeSector(sector)) goto fail;
-        }
+     
         sector += n; ns -= n;
+
     } while (ns);
 
     // Write bitmap.
